@@ -1,58 +1,183 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div class="bg">
+    <div class="txt">
+      Welcome To ToDoList !
+    </div>
+
+    <div class="vertical-container t_tenp">
+      <el-input class="ipt" placeholder="請輸入您的備忘事項" v-model="newitem" clearable>
+      </el-input>
+      <button class="vertical-container__martwo btn btn__white" href="" @click="correct">
+        確認
+      </button>
+    </div>
+
+    <div class="vertical-container t_twep">
+      <ul class="content__ul">
+        <li class="content__ul-li" v-for="(item, index) in list" :key="index">
+          <i class="el-icon-delete-solid" @click="del(index)"></i>
+          <a class="" style="font-family: monospace;">{{ item.name }}</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String,
+  data() {
+    return {
+      newitem: '',
+      list: [],
+    };
+  },
+  methods: {
+    correct() {
+      const vm = this;
+      if (vm.newitem === '') {
+        alert('您尚未輸入任何有效字元！');
+      } else {
+        // alert('success!');
+        vm.list.push({
+          name: vm.newitem,
+        });
+        vm.newitem = '';
+      }
+    },
+    del(index) {
+      const vm = this;
+      vm.$confirm('確定要刪除嗎?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+          });
+          vm.list.splice(index, 1);
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          });
+        });
+    },
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+<style lang="scss">
+.vertical-container {
+  position: relative;
+  display: -webkit-flex;
+  display: flex;
+  text-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  &__martwo {
+    margin-left: 2vw;
+  }
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.t {
+  &_tenp {
+    top: 10%;
+  }
+  &_twep {
+    top: 20%;
+  }
 }
-li {
+.bg {
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(126, 213, 111, 0.8),
+      rgba(40, 180, 133, 0.8)
+    ),
+    url("https://images.unsplash.com/photo-1563432065121-35b49977c4fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80");
+}
+.txt {
+  font-family: "Lato", sans-serif;
+  position: relative;
+  text-align: center;
+  top: 10%;
+  height: 30vh;
+  font-size: 3.5rem;
+  letter-spacing: 1.5rem;
+  color: #fff;
+}
+.ipt {
+  width: 20vw;
+}
+.w {
+  position: relative;
+  top: 10%;
+  width: 100vw;
+  height: 20vh;
+  text-align: center;
+  &__half {
+    float: left;
+  }
+}
+.btn {
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
   display: inline-block;
-  margin: 0 10px;
+  border-radius: 10rem;
+  transition: all 0s;
+  position: relative;
+  font-size: 1.4rem;
+  font-family: "Microsoft JhengHei";
+  cursor: pointer;
+  &__white {
+    background-color: #fff;
+    color: #777;
+  }
+  &:hover {
+    // content: "";
+    font-size: 2rem;
+    padding: 0.1rem 1rem;
+    border-radius: 10rem;
+    position: relative;
+    display: inline-block;
+    transition: all 0.4s;
+    // transform: translateX(20px);
+  }
 }
-a {
-  color: #42b983;
+
+.content {
+  position: relative;
+  width: 100vw;
+  top: 10%;
+  text-align: center;
+  &__ul {
+    list-style-type: none;
+    &-li {
+      text-align: left;
+      font-size: 36px;
+      i {
+        cursor: pointer;
+        &:hover {
+          color: rgba(255, 0, 0, 0.829);
+          position: relative;
+          display: inline-block;
+          transition: all 0.5s;
+          transform: translateX(5px);
+        }
+      }
+      a {
+        -webkit-text-stroke: 2px black;
+        font-weight: bold;
+        color: white;
+        letter-spacing: 1px;
+        margin-left: 1vw;
+      }
+    }
+  }
 }
 </style>
