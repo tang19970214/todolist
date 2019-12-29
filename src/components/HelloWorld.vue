@@ -16,7 +16,7 @@
       <ul class="content__ul">
         <li class="content__ul-li" v-for="(item, index) in list" :key="index">
           <i class="el-icon-delete-solid" @click="del(index)"></i>
-          <a class="" style="font-family: monospace;">{{ item.name }}</a>
+          <a class="" style="font-family: monospace,Microsoft JhengHei;">{{ item.name }}</a>
         </li>
       </ul>
     </div>
