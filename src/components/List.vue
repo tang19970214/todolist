@@ -1,18 +1,24 @@
 <template>
   <div class="bg">
-    <div class="txt">
+    <div class="vertical-container txt">
       Welcome To ToDoList !
     </div>
 
-    <div class="vertical-container t_tenp">
+    <div class="vertical-container">
       <el-input class="ipt" placeholder="請輸入您的備忘事項" v-model="newitem" clearable>
       </el-input>
-      <button class="vertical-container__martwo btn btn__white" href="" @click="correct">
-        確認
-      </button>
+
+      <el-button
+        class="vertical-container__martwo"
+        @click="correct"
+        v-on:keyup.enter="submit"
+        type="primary"
+        icon="el-icon-edit"
+        circle
+      ></el-button>
     </div>
 
-    <div class="vertical-container t_twep">
+    <div class="vertical-container t_tenp">
       <ul class="content__ul">
         <li class="content__ul-li" v-for="(item, index) in list" :key="index">
           <i class="el-icon-delete-solid" @click="del(index)"></i>
@@ -87,13 +93,12 @@ export default {
   &_tenp {
     top: 10%;
   }
-  &_twep {
-    top: 20%;
-  }
 }
 .bg {
   width: 100vw;
   height: 100vh;
+  background-size: 100%;
+  background-position: center;
   background-image: linear-gradient(
       to right bottom,
       rgba(126, 213, 111, 0.8),
@@ -103,9 +108,9 @@ export default {
 }
 .txt {
   font-family: "Lato", sans-serif;
-  position: relative;
+  // position: relative;
   text-align: center;
-  top: 10%;
+  // top: 10%;
   height: 30vh;
   font-size: 3.5rem;
   letter-spacing: 1.5rem;
@@ -113,41 +118,6 @@ export default {
 }
 .ipt {
   width: 20vw;
-}
-.w {
-  position: relative;
-  top: 10%;
-  width: 100vw;
-  height: 20vh;
-  text-align: center;
-  &__half {
-    float: left;
-  }
-}
-.btn {
-  text-decoration: none;
-  padding: 0.5rem 1.5rem;
-  display: inline-block;
-  border-radius: 10rem;
-  transition: all 0s;
-  position: relative;
-  font-size: 1.4rem;
-  font-family: "Microsoft JhengHei";
-  cursor: pointer;
-  &__white {
-    background-color: #fff;
-    color: #777;
-  }
-  &:hover {
-    // content: "";
-    font-size: 2rem;
-    padding: 0.1rem 1rem;
-    border-radius: 10rem;
-    position: relative;
-    display: inline-block;
-    transition: all 0.4s;
-    // transform: translateX(20px);
-  }
 }
 
 .content {
@@ -159,11 +129,12 @@ export default {
     list-style-type: none;
     &-li {
       text-align: left;
-      font-size: 36px;
       i {
         cursor: pointer;
+        color: rgba(100, 100, 100, 0.6);
+        font-size: 28px;
         &:hover {
-          color: rgba(255, 0, 0, 0.829);
+          color: rgba(255, 0, 0, 0.7);
           position: relative;
           display: inline-block;
           transition: all 0.5s;
@@ -171,6 +142,7 @@ export default {
         }
       }
       a {
+        font-size: 36px;
         -webkit-text-stroke: 2px black;
         font-weight: bold;
         color: white;
