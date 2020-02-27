@@ -1,16 +1,32 @@
 <template>
   <div id="app">
+    <titlebar />
     <List />
   </div>
 </template>
 
 <script>
-import List from './components/List.vue';
+import store from "./store";
+import titlebar from "./components/titlebar.vue";
+import List from "./components/List.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    List,
+    titlebar,
+    List
   },
+  data() {
+    // console.log(store);
+    return {};
+  },
+  created(){
+    // console.log(store);
+    store.dispatch("member/checkuser").then((data)=>{
+      console.log(data);
+    });
+    // store.dispatch("")
+  },
+  
 };
 </script>
